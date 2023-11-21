@@ -15,24 +15,24 @@ class Node:
 
 def branch_and_bound(matrix, current_node, visited):
     global bound
-    # se todas as cidades foram visitadas
+    
     if not current_node.unvisited_cities:
-        # se encontrar um caminho melhor que o bound atual, atualiza o bound e adiciona aos paths
+       
         if current_node.cost_now < bound:
             bound = current_node.cost_now
             paths[tuple(visited)] = current_node.cost_now
         return
     
-    # para cada cidade não visitada procura caminhos a partir da cidade atual
+    
     for next_city in current_node.unvisited_cities:
-        # no momento em o caminho atual ultrapassar o valor, para de explorar esse caminho
+        
         if current_node.cost_now + matrix[current_node.number][next_city] < bound:
-            # cria a proxima cidade
+            
             child_node = current_node.create_child(next_city, matrix[current_node.number][next_city])
             child_node.previous = current_node
             visited.append(next_city)
 
-            # explora a nova cidade
+            
             branch_and_bound(matrix, child_node, visited)
             visited.pop() # remove cidades depois de explorar nas chamadas recursivas
 
